@@ -1,0 +1,17 @@
+:root {
+  --bg-base: #0f1117;
+  --bg-surface: #1a1d27;
+  --bg-elevated: #242736;
+  --border: #2e3147;
+  --text-primary: #e8eaf0;
+  --text-secondary: #8b91a8;
+  --accent: #6366f1;
+  --accent-hover: #818cf8;
+  --success: #22c55e;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+  --peak-color: #f59e0b;
+  --non-peak-color: #6366f1;
+  --radius: 8px;
+  --radius-lg: 12px;
+}
