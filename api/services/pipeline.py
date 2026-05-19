@@ -19,12 +19,18 @@ from api.schemas.analysis import (
 )
 
 PEAK_HOURS = frozenset(range(19, 23))
+REQUIRED_COLUMNS = {"order_id", "order_time", "delivery_time", "distance_km", "order_value", "city"}
 
 
 def run_full_pipeline(csv_bytes: bytes) -> AnalysisResult:
     start = time.monotonic()
 
     df = pd.read_csv(io.BytesIO(csv_bytes))
+
+    missing = REQUIRED_COLUMNS - set(df.columns)
+    if missing:
+        raise ValueError(f"Missing required columns: {sorted(missing)}")
+
     df = preprocess(df)
     validate_data(df)
 
