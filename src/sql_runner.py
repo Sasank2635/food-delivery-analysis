@@ -1,13 +1,33 @@
 import sqlite3
-import logging
 import pandas as pd
+import logging
 
 
-def run_queries(df: pd.DataFrame) -> None:
-    logging.info("Starting SQL query execution...")
+# 🔥 Logging setup
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s"
+)
 
-    queries = {
-        "delivery_by_hour": """
+
+def run_queries():
+    try:
+        logging.info("🗄️ Starting SQL query execution...")
+
+        # 📥 Load CSV
+        df = pd.read_csv("../data/raw_orders.csv")
+        logging.info(f"Loaded dataset with {len(df)} rows")
+
+        # 🧠 Create in-memory DB
+        conn = sqlite3.connect(":memory:")
+        df.to_sql("orders", conn, index=False, if_exists="replace")
+
+        logging.info("SQLite in-memory database created")
+
+        # 📊 Queries
+        queries = {
+
+            "delivery_by_hour": """
             SELECT
                 strftime('%H', order_time) AS hour,
                 COUNT(*) AS total_orders,
@@ -15,8 +35,9 @@ def run_queries(df: pd.DataFrame) -> None:
             FROM orders
             GROUP BY hour
             ORDER BY hour;
-        """,
-        "peak_vs_non_peak": """
+            """,
+
+            "peak_vs_non_peak": """
             SELECT
                 CASE
                     WHEN CAST(strftime('%H', order_time) AS INTEGER) BETWEEN 19 AND 22 THEN 'Peak'
@@ -26,25 +47,32 @@ def run_queries(df: pd.DataFrame) -> None:
                 AVG((julianday(delivery_time) - julianday(order_time)) * 24 * 60) AS avg_delivery_time
             FROM orders
             GROUP BY time_bucket;
-        """,
-        "city_performance": """
+            """,
+
+            "city_performance": """
             SELECT
                 city,
                 COUNT(*) AS total_orders,
                 AVG((julianday(delivery_time) - julianday(order_time)) * 24 * 60) AS avg_delivery_time
             FROM orders
             GROUP BY city;
-        """,
-    }
+            """
+        }
 
-    with sqlite3.connect(":memory:") as conn:
-        df.to_sql("orders", conn, index=False, if_exists="replace")
-        logging.info("SQLite in-memory database created with %d rows", len(df))
+        # ▶️ Run queries
         for name, query in queries.items():
-            result = pd.read_sql(query, conn)
-            logging.info("Query [%s]:\n%s", name, result)
+            logging.info(f"📊 Running query: {name}")
 
-    logging.info("SQL execution completed")
+            result = pd.read_sql(query, conn)
+
+            logging.info(f"Result:\n{result}")
+
+        conn.close()
+        logging.info("✅ SQL execution completed successfully")
+
+    except Exception as e:
+        logging.error("❌ SQL execution failed")
+        logging.error(str(e))
 
 
 def run_queries_json(df: pd.DataFrame) -> dict[str, list[dict]]:
@@ -84,3 +112,7 @@ def run_queries_json(df: pd.DataFrame) -> dict[str, list[dict]]:
         for name, query in queries.items():
             results[name] = pd.read_sql(query, conn).to_dict(orient="records")
     return results
+
+
+if __name__ == "__main__":
+    run_queries()
