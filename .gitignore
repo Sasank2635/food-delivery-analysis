@@ -60,9 +60,16 @@ extra/
 CLAUDE.md
 
 # -----------------------------
-# Brainstorming Sessions
+# Brainstorming / Superpowers
 # -----------------------------
 .superpowers/
+docs/superpowers/
+
+# -----------------------------
+# Test Cache
+# -----------------------------
+.pytest_cache/
+ui/.vitest/
 
 # -----------------------------
 # Node / Frontend
