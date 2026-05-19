@@ -1,0 +1,88 @@
+# -----------------------------
+# Virtual Environment
+# -----------------------------
+.venv/
+
+# -----------------------------
+# Python Cache
+# -----------------------------
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# -----------------------------
+# Data Files (Generated)
+# -----------------------------
+data/cleaned_orders.csv
+
+# -----------------------------
+# Database Files
+# -----------------------------
+*.db
+*.sqlite3
+
+# -----------------------------
+# Output Files (Generated)
+# -----------------------------
+outputs/*.json
+outputs/*.csv
+outputs/*.png
+
+# -----------------------------
+# Dashboard Files (Generated)
+# -----------------------------
+dashboard/*.csv
+dashboard/*.json
+
+# -----------------------------
+# Logs
+# -----------------------------
+*.log
+
+# -----------------------------
+# OS Files
+# -----------------------------
+.DS_Store
+Thumbs.db
+
+# -----------------------------
+# Jupyter Notebook Checkpoints
+# -----------------------------
+.ipynb_checkpoints/
+
+# -----------------------------
+# IDE Files
+# -----------------------------
+.vscode/
+.idea/
+extra/
+CLAUDE.md
+
+# -----------------------------
+# Brainstorming / Superpowers
+# -----------------------------
+.superpowers/
+docs/superpowers/
+
+# -----------------------------
+# Test Cache
+# -----------------------------
+.pytest_cache/
+ui/.vitest/
+
+# -----------------------------
+# Node / Frontend
+# -----------------------------
+node_modules/
+ui/node_modules/
+ui/dist/
+ui/.vite/
+ui/coverage/
+
+# -----------------------------
+# Environment
+# -----------------------------
+.env
+.env.local
+.env.*.local
