@@ -27,6 +27,13 @@ data/cleaned_orders.csv
 # -----------------------------
 outputs/*.json
 outputs/*.csv
+outputs/*.png
+
+# -----------------------------
+# Dashboard Files (Generated)
+# -----------------------------
+dashboard/*.csv
+dashboard/*.json
 
 # -----------------------------
 # Logs
